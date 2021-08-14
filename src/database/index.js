@@ -22,8 +22,19 @@ const getUsers = () => {
 };
 
 const getListOfAgesOfUsersWith = (item) => {
+
     const dataAccessMethod = () => {
         // fill me in :)
+        let usersWithItem = _.filter(db.usersById, userInfo => {
+            return _.indexOf(db.itemsOfUserByUsername[userInfo.username], item) !== -1;
+        });
+        let listOfAgesOfUsersWithItem = Object.values(Array.from(_(usersWithItem)
+        .groupBy('age')))
+        .map(user => ({
+          age: user[0].age,
+          count: user.length
+        }));
+        return listOfAgesOfUsersWithItem;
     }
     return mockDBCall(dataAccessMethod);
 }
